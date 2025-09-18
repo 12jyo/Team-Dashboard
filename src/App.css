@@ -28,6 +28,8 @@
 }
 
 .search-input {
+  background: #cfcdcd;
+  color: black;
   padding: 8px 12px;
   width: 240px;
   border: 1px solid #ccc;
