@@ -14,25 +14,46 @@ const App = () => {
   const [rowData] = useState(data[0].employees);
 
   const [columnDefs] = useState([
-    { headerName: "ID", field: "id", width: 45 },
-    { headerName: "First Name", field: "firstName", width: 100 },
-    { headerName: "Last Name", field: "lastName", width: 100 },
+    { headerName: "ID", field: "id", width: 60 },
+    { headerName: "First Name", field: "firstName", width: 120 },
+    { headerName: "Last Name", field: "lastName", width: 120 },
     { headerName: "Email", field: "email", width: 250 },
     { headerName: "Department", field: "department", width: 150 },
-    { headerName: "Position", field: "position", width: 200 },
-    { headerName: "Salary", field: "salary", valueFormatter: p => `$${p.value}`, width: 100 },
+    { headerName: "Position", field: "position", width: 210 },
+    {
+      headerName: "Salary",
+      field: "salary",
+      valueFormatter: (p) => `$${p.value.toLocaleString()}`,
+      width: 120,
+    },
     { headerName: "Hire Date", field: "hireDate", width: 130 },
-    { headerName: "Age", field: "age", width: 75 },
+    { headerName: "Age", field: "age", width: 80 },
     { headerName: "Location", field: "location", width: 150 },
-    { headerName: "Performance", field: "performanceRating", width: 120 },
-    { headerName: "Projects", field: "projectsCompleted", width: 100 },
-    { headerName: "Active", field: "isActive", width: 100 },
-    { headerName: "Manager", field: "manager", width: 150 },
-    { headerName: "Skills", field: "skills", valueFormatter: p => p.value?.join(", "), width: 'auto' }
+    { headerName: "Performance", field: "performanceRating", width: 130 },
+    { headerName: "Projects", field: "projectsCompleted", width: 110 },
+    {
+      headerName: "Active",
+      field: "isActive",
+      width: 100,
+      cellRenderer: (p) => (p.value ? "✅ Yes" : "❌ No"),
+    },
+    { headerName: "Manager", field: "manager", width: 160 },
+    {
+      headerName: "Skills",
+      field: "skills",
+      valueFormatter: (p) => p.value?.join(", "),
+      flex: 2,
+      minWidth: 400,
+    },
   ]);
 
-  const [quickFilterText, setQuickFilterText] = useState("");
+  const [defaultColDef] = useState({
+    resizable: true,
+    sortable: true,
+    filter: true,
+  });
 
+  const [quickFilterText, setQuickFilterText] = useState("");
   const onFilterTextChange = useCallback((e) => {
     setQuickFilterText(e.target.value);
   }, []);
@@ -61,6 +82,7 @@ const App = () => {
           paginationPageSize={10}
           paginationPageSizeSelector={[10, 20, 50]}
           quickFilterText={quickFilterText}
+          defaultColDef={defaultColDef}
         />
       </div>
     </div>
